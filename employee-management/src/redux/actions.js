@@ -1,9 +1,13 @@
+//actions.js
 import axios from "axios";
 
 export const addEmployee = (employee) => async (dispatch) => {
   try {
-    //TODO: Add path to the post request after creating the server
-    const response = await axios.post("", employee);
+    //TODO: Add path to the post request after creating the server - DONE
+    const response = await axios.post(
+      "http://localhost:3004/employeemanagement",
+      employee
+    );
     console.log("Server response: ", response.data);
 
     dispatch({
@@ -17,8 +21,11 @@ export const addEmployee = (employee) => async (dispatch) => {
 
 export const updateDetails = (id, updateDetails) => async (dispatch) => {
   try {
-    //TODO: Add path to the patch request after creating the server
-    const response = await axios.patch(``, updateDetails);
+    //TODO: Add path to the patch request after creating the server - DONE
+    const response = await axios.patch(
+      `http://localhost:3004/employeemanagement/${id}`,
+      updateDetails
+    );
     dispatch({
       type: "UPDATE_DETAILS",
       payload: { id, updateDetails: response.data },
@@ -30,8 +37,8 @@ export const updateDetails = (id, updateDetails) => async (dispatch) => {
 
 export const deleteEmployee = (id) => async (dispatch) => {
   try {
-    //TODO: Add path to the patch request after creating the server
-    await axios.delete(``);
+    //TODO: Add path to the patch request after creating the server - DONE
+    await axios.delete(`http://localhost:3004/employeemanagement/${id}`);
     dispatch({
       type: "DELETE_EMPLOYEE",
       payload: id,
@@ -43,8 +50,10 @@ export const deleteEmployee = (id) => async (dispatch) => {
 
 export const fetchEmployeeDetails = () => async (dispatch) => {
   try {
-    //TODO: Add path to the get request after creating the server
-    const response = await axios.get("");
+    //TODO: Add path to the get request after creating the server - DONE
+    const response = await axios.get(
+      "http://localhost:3004/employeemanagement"
+    );
     dispatch({
       type: "FETCH_EMPLOYEE_DETAILS",
       payload: response.data,

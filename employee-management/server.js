@@ -9,6 +9,7 @@ const app = express();
 
 const port = 3004;
 
+//Middleware setup
 app.use(bodyParser.json());
 app.use(cors()); //Enable CORS
 
@@ -57,7 +58,7 @@ app.get("/employeedetails/", (req, res) => {
   res.json(employeeManagementData);
 });
 
-app.get("employeedetails/:id", (req, res) => {
+app.get("/employeedetails/:id", (req, res) => {
   const idToFetch = parseInt(req.params.id);
   console.log("ID to fetch: ", idToFetch);
   const itemToFetch = employeeManagementData.find(
