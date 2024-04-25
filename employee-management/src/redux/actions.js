@@ -5,7 +5,7 @@ export const addEmployee = (employee) => async (dispatch) => {
   try {
     //TODO: Add path to the post request after creating the server - DONE
     const response = await axios.post(
-      "http://localhost:3004/employeemanagement",
+      `http://localhost:3004/employeedetails`,
       employee
     );
     console.log("Server response: ", response.data);
@@ -23,7 +23,7 @@ export const updateDetails = (id, updateDetails) => async (dispatch) => {
   try {
     //TODO: Add path to the patch request after creating the server - DONE
     const response = await axios.patch(
-      `http://localhost:3004/employeemanagement/${id}`,
+      `http://localhost:3004/employeedetails/${id}`,
       updateDetails
     );
     dispatch({
@@ -38,9 +38,9 @@ export const updateDetails = (id, updateDetails) => async (dispatch) => {
 export const deleteEmployee = (id) => async (dispatch) => {
   try {
     //TODO: Add path to the patch request after creating the server - DONE
-    await axios.delete(`http://localhost:3004/employeemanagement/${id}`);
+    await axios.delete(`http://localhost:3004/employeedetails/${id}`);
     dispatch({
-      type: "DELETE_EMPLOYEE",
+      type: "DELETE_DETAILS",
       payload: id,
     });
   } catch (error) {
@@ -51,9 +51,7 @@ export const deleteEmployee = (id) => async (dispatch) => {
 export const fetchEmployeeDetails = () => async (dispatch) => {
   try {
     //TODO: Add path to the get request after creating the server - DONE
-    const response = await axios.get(
-      "http://localhost:3004/employeemanagement"
-    );
+    const response = await axios.get("http://localhost:3004/employeedetails");
     dispatch({
       type: "FETCH_EMPLOYEE_DETAILS",
       payload: response.data,

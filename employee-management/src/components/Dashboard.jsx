@@ -5,25 +5,40 @@ import { useNavigate } from "react-router-dom";
 import { fetchEmployeeDetails, deleteEmployee } from "../redux/actions";
 import { Delete } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
+import { DeleteTwoTone } from "@mui/icons-material";
 
 import { useSelector, useDispatch } from "react-redux";
 import store from "../redux/store";
+
+import { getAuth, signOut } from "firebase/auth"; //To hanlde Signout
 function Dashboard() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const employeeData = useSelector(
     (state) => state.employeeManagementData || []
   );
-  const dispatch = useDispatch();
 
   useEffect(() => {
     console.log("Employee data: ", employeeData);
     dispatch(fetchEmployeeDetails());
-  }, [dispatch]); //check
+  }, [dispatch]); //Ensure data is fetched initially
 
   //Delete
   const handleDelete = (id) => {
     dispatch(deleteEmployee(id));
+  };
+
+  const handleLogout = () => {
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        //Sign-out successfull
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.log("Error during logout: ", error);
+      });
   };
 
   return (
@@ -58,27 +73,35 @@ function Dashboard() {
             </thead>
             <br />
             <tbody>
-              {employeeData.map((listContent, index, id) => (
+              {employeeData.map((employee, index, id) => (
                 // TODO - Change key to an appropriate value
-                <tr key={listContent.userid}>
+                <tr key={employee.userid}>
                   <td>{index + 1}</td>
-                  <td>{listContent.userid}</td>
-                  <td>{listContent.firstName}</td>
-                  <td>{listContent.lastName}</td>
-                  <td>{listContent.email}</td>
-                  <td>{listContent.salary}</td>
-                  <td>{listContent.date}</td>
+                  <td>{employee.userid}</td>
+                  <td>{employee.firstName}</td>
+                  <td>{employee.lastName}</td>
+                  <td>{employee.email}</td>
+                  <td>{employee.salary}</td>
+                  <td>{employee.date}</td>
                   <td>
                     <EditIcon
-                      onClick={() => navigate(`/edit/${listContent.id}`)}
+                      onClick={() => navigate(`/edit/${employee.id}`)}
                     />
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <Delete onClick={() => handleDelete(listContent.id)} />
+                    <Delete onClick={() => handleDelete(employee.id)} />
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          <Button
+            variant="contained"
+            color="success"
+            id="button2 "
+            onClick={handleLogout}
+          >
+            Logout
+          </Button>
         </div>
       </div>
     </React.Fragment>

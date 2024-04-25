@@ -21,9 +21,10 @@ function AddEmployeeDetails({ employeeManagementData, addEmployee }) {
   });
 
   const navigate = useNavigate();
-  useEffect(() => {
-    console.log("Updated state: ", employeeManagementData);
-  }, [employeeManagementData]);
+  //change
+  //   useEffect(() => {
+  //     console.log("Updated state: ", employeeManagementData);
+  //   }, [employeeManagementData]);
 
   const handleInputChange = (e) => {
     const { name, value, type } = e.target;
@@ -39,20 +40,20 @@ function AddEmployeeDetails({ employeeManagementData, addEmployee }) {
 
     const newItem = {
       id: Math.floor(Math.random() * (1000 - 100 + 1)) + 100,
-      userid: userInput.userid, //check
+      userid: userInput.userid,
       firstName: userInput.firstName,
       lastName: userInput.lastName,
       email: userInput.email,
-      salary: userInput.salary,
+      salary: parseFloat(userInput.salary), // Convert salary to number
       date: userInput.date,
     };
 
     await addEmployee(newItem);
     console.log("Added new employee: ", newItem);
 
-    //check
+    //Reset all the fields after submission
     setUserInput({
-      userid: userInput.userid, //check
+      userid: "",
       firstName: "",
       lastName: "",
       email: "",
@@ -78,7 +79,7 @@ function AddEmployeeDetails({ employeeManagementData, addEmployee }) {
             id="button"
             onClick={handleButtonClick}
           >
-            HomePage
+            Home
           </Button>
         </div>
 
@@ -95,7 +96,7 @@ function AddEmployeeDetails({ employeeManagementData, addEmployee }) {
                   name="userid"
                   value={userInput.userid}
                   onChange={handleInputChange}
-                  sx={{ width: "150%" }}
+                  sx={{ width: "100%" }}
                 />
               </label>
               <br />
@@ -110,7 +111,7 @@ function AddEmployeeDetails({ employeeManagementData, addEmployee }) {
                   name="firstName"
                   value={userInput.firstName}
                   onChange={handleInputChange}
-                  sx={{ width: "150%" }}
+                  sx={{ width: "100%" }}
                 />
               </label>
               <br />
@@ -124,7 +125,7 @@ function AddEmployeeDetails({ employeeManagementData, addEmployee }) {
                   name="lastName"
                   value={userInput.lastName}
                   onChange={handleInputChange}
-                  sx={{ width: "150%" }}
+                  sx={{ width: "100%" }}
                 />
               </label>
               <br />

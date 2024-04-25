@@ -1,6 +1,6 @@
 //reducer.js
 const initialState = {
-  employeeData: [],
+  employeeManagementData: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -8,33 +8,36 @@ const reducer = (state = initialState, action) => {
     case "ADD_EMPLOYEE":
       return {
         ...state,
-        employeeData: [...state.employeeData, action.payload],
+        employeeManagementData: [
+          ...state.employeeManagementData,
+          action.payload,
+        ],
       };
     //UPDATE_DETAILS, DELETE_EMPLOYEE
     case "UPDATE_DETAILS":
       const { id, updatedDetails } = action.payload;
-      const updatedData = state.employeeData.map((employee) =>
+      const updatedData = state.employeeManagementData.map((employee) =>
         employee.id === id ? { ...employee, ...updatedDetails } : employee
       );
       return {
         ...state,
-        employeeData: updatedData,
+        employeeManagementData: updatedData,
       };
 
     case "DELETE_DETAILS":
       const employeeToDelete = action.payload;
-      const filteredData = state.employeeData.filter(
+      const filteredData = state.employeeManagementData.filter(
         (employee) => employee.id !== employeeToDelete
       );
       return {
         ...state,
-        employeeData: filteredData,
+        employeeManagementData: filteredData,
       };
 
     case "FETCH_EMPLOYEE_DETAILS":
       return {
         ...state,
-        employeeData: action.payload,
+        employeeManagementData: action.payload,
       };
     default:
       return state;

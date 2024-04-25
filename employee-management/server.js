@@ -54,10 +54,12 @@ const generateRandom = () => {
   return newId;
 };
 
+//GET endpoint for getting all employee details
 app.get("/employeedetails/", (req, res) => {
   res.json(employeeManagementData);
 });
 
+// GET endpoint for specific employee by ID
 app.get("/employeedetails/:id", (req, res) => {
   const idToFetch = parseInt(req.params.id);
   console.log("ID to fetch: ", idToFetch);
@@ -66,12 +68,13 @@ app.get("/employeedetails/:id", (req, res) => {
   );
 
   if (itemToFetch) {
-    res.json(itemToFetch);
+    res.json(itemToFetch); // Return the specific employee details
   } else {
-    res.status(404).send("Item not found");
+    res.status(404).json({ message: "Employee not found" }); // Better error message
   }
   console.log("Item to fetch:", itemToFetch);
 });
+//POST
 app.post("/employeedetails", (req, res) => {
   const receivedData = req.body;
   console.log("Received data:", receivedData);
@@ -91,7 +94,9 @@ app.post("/employeedetails", (req, res) => {
 
   res.status(200).send("Data received successfully");
 });
-app.patch("/employeedetaails/:id", (req, res) => {
+
+//PATCH
+app.patch("/employeedetails/:id", (req, res) => {
   const idToUpdate = parseInt(req.params.id);
   // const { completed } = req.body;
 
@@ -117,7 +122,7 @@ app.patch("/employeedetaails/:id", (req, res) => {
 });
 
 //Delete endpoint to remove an item with a specific ID
-app.delete("/employeedata/:id", (req, res) => {
+app.delete("/employeedetails/:id", (req, res) => {
   const idToDelete = parseInt(req.params.id);
 
   //Find the inddex of the item with the secified ID
