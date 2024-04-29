@@ -106,13 +106,14 @@ app.patch("/employeedetails/:id", (req, res) => {
 
   if (itemToUpdate) {
     //If the item is found, update its completed status
-    const { userid, firstName, lastName, email, salary, date } = req.body;
+    // const { userid, firstName, lastName, email, salary, date } = req.body;
+    const { userid, firstName, lastName, email, salary } = req.body;
     itemToUpdate.userid = userid;
     itemToUpdate.firstName = firstName;
     itemToUpdate.lastName = lastName;
     itemToUpdate.email = email;
     itemToUpdate.salary = salary;
-    itemToUpdate.date = date;
+    // itemToUpdate.date = date;
     console.log("Item to update: ", itemToUpdate);
     res.status(200).send(itemToUpdate);
   } else {

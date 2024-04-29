@@ -11,6 +11,13 @@ import { useSelector, useDispatch } from "react-redux";
 import store from "../redux/store";
 
 import { getAuth, signOut } from "firebase/auth"; //To hanlde Signout
+//change
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "../firebaseConfig";
+
+//Initialize firebase
+initializeApp(firebaseConfig);
+
 function Dashboard() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
