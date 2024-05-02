@@ -8,6 +8,7 @@ import Login from "../components/Login";
 
 import AddEmployee from "../components/AddEmployee";
 import EditEmployee from "../components/EditEmployee";
+import EmployeeDetails from "../components/EmployeeDetails";
 
 const Router = () => {
   return (
@@ -24,6 +25,7 @@ const Router = () => {
         <Route path="/home" element={<Dashboard />} />
         {/* <Route path="/edit/:id" element={<EditEmployeeDetails />} /> */}
         <Route path="/edit/:id" element={<EditEmployee />} />
+        <Route path="/employee/:id" element={<EmployeeDetails />} />
       </Routes>
     </BrowserRouter>
   );

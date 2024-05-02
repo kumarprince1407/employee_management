@@ -5,6 +5,14 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 import { addEmployee } from "../redux/actions";
 
+//change
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+//
+import "./style.css";
+
 function FormComponent({ initialUserInput, handleFunctionClick }) {
   //{initialUserInput, handleFunctionClick} is a destructured obj that reprents the props passed to the component
 
@@ -15,6 +23,7 @@ function FormComponent({ initialUserInput, handleFunctionClick }) {
 
   //location
   const location = useLocation();
+  //TODO: name the variable correctly
   const page = location.pathname === "/" ? true : false;
 
   //making use of useEffect hook to handle updates to the initialUserInput prop
@@ -28,6 +37,13 @@ function FormComponent({ initialUserInput, handleFunctionClick }) {
     setUserInput((prevState) => ({
       ...prevState,
       [name]: value,
+    }));
+  };
+
+  const handleDateChange = (date) => {
+    setUserInput((prevState) => ({
+      ...prevState,
+      date: date ? date.format("MM/DD/YYYY") : "",
     }));
   };
 
@@ -62,114 +78,138 @@ function FormComponent({ initialUserInput, handleFunctionClick }) {
 
   return (
     <React.Fragment>
-      <form onSubmit={handleFormSubmit}>
-        <label htmlFor="textarea1">
-          <br />
-          <TextField
-            label="User ID"
-            className="inputfield"
-            type="text"
-            name="userid"
-            value={userInput.userid}
-            onChange={handleInputChange}
-            sx={{ width: "100%" }}
-          />
-        </label>
-        <br />
-        <br />
-
-        <label htmlFor="textarea2">
-          <br />
-          <TextField
-            label="First name"
-            className="inputfield"
-            type="text"
-            name="firstName"
-            value={userInput.firstName}
-            onChange={handleInputChange}
-            sx={{ width: "100%" }}
-          />
-        </label>
-        <br />
-        <br />
-        <label htmlFor="textarea3">
-          <br />
-          <TextField
-            label="Last name"
-            className="inputfield"
-            type="text"
-            name="lastName"
-            value={userInput.lastName}
-            onChange={handleInputChange}
-            sx={{ width: "100%" }}
-          />
-        </label>
-        <br />
-        <br />
-        <label htmlFor="textarea4">
-          <br />
-          <TextField
-            label="Email"
-            className="inputfield"
-            type="text"
-            name="email"
-            value={userInput.email}
-            onChange={handleInputChange}
-            sx={{ width: "150%" }}
-          />
-        </label>
-        <br />
-        <br />
-        <label htmlFor="textarea5">
-          <br />
-          <TextField
-            label="Salary"
-            className="inputfield"
-            type="number"
-            name="salary"
-            value={userInput.salary}
-            onChange={handleInputChange}
-            sx={{ width: "150%" }}
-          />
-        </label>
-        <br />
-        {!formValid && (
-          <p style={{ color: "red", marginTop: "5px" }}>
-            Please fill in all the details.
-          </p>
-        )}
-        <br />
-        {/* change */}
-        {page && (
-          <>
-            <label htmlFor="textarea6">
+      <div className="formElement">
+        <div className="inputValues">
+          <form onSubmit={handleFormSubmit}>
+            <div className="formSection">
               <br />
+
+              <div className="inputLabel">
+                <h3>Username:</h3>
+              </div>
               <TextField
-                label="Date"
-                className="inputfield"
-                type="text"
-                name="date"
-                value={userInput.date}
+                // label="User ID"
+
+                name="userid"
+                value={userInput.userid}
                 onChange={handleInputChange}
-                sx={{ width: "150%" }}
+                sx={{ width: "60%" }}
               />
-            </label>
+
+              {/* <span className="formText">First Name:</span> */}
+              <label htmlFor="textarea2">
+                <br />
+                <div className="inputLabel">
+                  <h3>First name:</h3>
+                </div>
+                <TextField
+                  // label="First name"
+                  className="inputfield"
+                  type="text"
+                  name="firstName"
+                  value={userInput.firstName}
+                  onChange={handleInputChange}
+                  sx={{ width: "60%" }}
+                />
+              </label>
+
+              {/* <span className="formText">Last Name:</span> */}
+              <label htmlFor="textarea3">
+                <br />
+                <div className="inputLabel">
+                  <h3>Last name:</h3>
+                </div>
+                <TextField
+                  // label="Last name"
+                  className="inputfield"
+                  type="text"
+                  name="lastName"
+                  value={userInput.lastName}
+                  onChange={handleInputChange}
+                  sx={{ width: "60%" }}
+                />
+              </label>
+
+              {/* <span className="formText">Email:</span> */}
+              <label htmlFor="textarea4">
+                <br />
+                <div className="inputLabel">
+                  <h3>Email:</h3>
+                </div>
+                <TextField
+                  // label="Email"
+                  className="inputfield"
+                  type="text"
+                  name="email"
+                  value={userInput.email}
+                  onChange={handleInputChange}
+                  sx={{ width: "60%" }}
+                />
+              </label>
+
+              {/* <span className="formText">Salary:</span> */}
+              <label htmlFor="textarea5">
+                <div className="inputLabel">
+                  <h3>Salary:</h3>
+                </div>
+                <TextField
+                  // label="Salary"
+                  className="inputfield"
+                  type="number"
+                  name="salary"
+                  value={userInput.salary}
+                  onChange={handleInputChange}
+                  sx={{ width: "60%" }}
+                />
+              </label>
+
+              {!formValid && (
+                <p style={{ color: "red", marginTop: "5px" }}>
+                  Please fill in all the details.
+                </p>
+              )}
+              <br />
+              {/* change */}
+              {page && (
+                <>
+                  <div className="inputLabel">
+                    <h3>Date of Joining:</h3>
+                  </div>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={["DatePicker"]}>
+                      <DatePicker
+                        value={userInput.date}
+                        onChange={handleDateChange}
+                        sx={{ width: "60%", marginLeft: "20vw" }}
+                      />
+                    </DemoContainer>
+                  </LocalizationProvider>
+
+                  <br />
+                  {!formValid && (
+                    <p style={{ color: "red", marginTop: "5px" }}>
+                      Please fill in all the fields.
+                    </p>
+                  )}
+                  <br />
+                </>
+              )}
+
+              <br />
+            </div>
+            <Button
+              variant="contained"
+              // color="success"
+              type="submit"
+            >
+              {/* {initialUserInput.id ? "Update & Save" : "Add New Employee"} */}
+              {page ? "Add New Employee" : "Update & Save"}
+            </Button>
             <br />
-            {!formValid && (
-              <p style={{ color: "red", marginTop: "5px" }}>
-                Please fill in all the fields.
-              </p>
-            )}
             <br />
-          </>
-        )}
-        <div className="buttonContainer">
-          <Button variant="contained" color="success" type="submit">
-            {/* {initialUserInput.id ? "Update & Save" : "Add New Employee"} */}
-            {page ? "Add New Employee" : "Update & Save"}
-          </Button>
+          </form>
         </div>
-      </form>
+      </div>
     </React.Fragment>
   );
 }

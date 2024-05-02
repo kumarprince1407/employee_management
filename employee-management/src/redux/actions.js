@@ -60,3 +60,19 @@ export const fetchEmployeeDetails = () => async (dispatch) => {
     console.log("Error fetching details: ", error);
   }
 };
+
+//change
+export const fetchEmployeeDetailsById = () => async (dispatch) => {
+  try {
+    //TODO: Add path to the get request after creating the server - DONE
+    const response = await axios.get(
+      "http://localhost:3004/employeedetails/:id"
+    );
+    dispatch({
+      type: "FETCH_EMPLOYEE_DETAILS_BY_ID",
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log("Error fetching details: ", error);
+  }
+};

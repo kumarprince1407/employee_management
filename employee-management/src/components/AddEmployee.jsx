@@ -1,3 +1,4 @@
+//AddEmployee.jsx
 import React, { useState } from "react";
 import axios from "axios";
 import { Button } from "@mui/material";
@@ -9,6 +10,8 @@ import { connect } from "react-redux";
 import { addEmployee } from "../redux/actions";
 
 import FormComponent from "./FormComponent";
+
+import "./style.css";
 
 function AddEmployee() {
   const [userInput, setUserInput] = useState({
@@ -53,25 +56,19 @@ function AddEmployee() {
   return (
     <React.Fragment>
       <div className="fragment1">
+        {/* start */}
         <div className="headingContainer">
-          <h2 id="heading1">
-            {" "}
-            <span style={{ marginRight: "20px", fontSize: "60px" }}>
-              Add Employee
-            </span>
-          </h2>
+          <h2 id="heading1">Add Employee </h2>
           <Button
             variant="contained"
             color="success"
-            id="button"
+            id="button2"
             onClick={handleButtonClick}
-            style={{ width: "180px" }}
           >
             Home
           </Button>
-          <br />
         </div>
-
+        {/* end */}
         <div className="mainContainer">
           <div className="inputForm">
             <h3 id="heading2">Enter employee details</h3>

@@ -8,6 +8,8 @@ import { connect } from "react-redux";
 
 import FormComponent from "./FormComponent";
 
+import "./style.css";
+
 function EditEmployee() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -79,22 +81,15 @@ function EditEmployee() {
     <React.Fragment>
       <div className="fragment1">
         <div className="headingContainer">
-          <h2 id="heading1">
-            {" "}
-            <span style={{ marginRight: "20px", fontSize: "60px" }}>
-              Edit Employee details
-            </span>
-          </h2>
+          <h2 id="heading1">Edit employee details</h2>
           <Button
             variant="contained"
-            color="success"
-            id="button"
+            // color="success"
+            id="button2"
             onClick={handleButtonClick}
-            style={{ width: "180px" }}
           >
             Home
           </Button>
-          <br />
         </div>
 
         <div className="mainContainer">

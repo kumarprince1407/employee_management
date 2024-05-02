@@ -4,4 +4,5 @@ export {
   updateDetails,
   deleteEmployee,
   fetchEmployeeDetails,
+  fetchEmployeeDetailsById,
 } from "./actions";

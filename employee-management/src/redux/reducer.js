@@ -39,6 +39,13 @@ const reducer = (state = initialState, action) => {
         ...state,
         employeeManagementData: action.payload,
       };
+
+    //change
+    case "FETCH_EMPLOYEE_DETAILS_BY_ID":
+      return {
+        ...state,
+        employeeManagementData: action.payload,
+      };
     default:
       return state;
   }
