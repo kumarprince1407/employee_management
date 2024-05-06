@@ -17,7 +17,7 @@
   margin-left: 5vw;
   margin-bottom: 10%;
 
-  width: 90vw;
+  width: 70vw;
   height: auto;
   border: 1px solid rgb(16, 78, 129);
   border-radius: 5px;
@@ -41,7 +41,8 @@
   margin-right: 20vw;
   margin-bottom: 5%;
 
-  width: 60vw;
+  width: 50vw;
+  /*width of the form*/
   height: auto;
   border: 1px solid rgb(150, 194, 230);
   border-radius: 5px;
@@ -51,39 +52,30 @@
 
   align-items: flex-start; /* Align elements to the left */
 
-  background-color: rgb(231, 246, 250);
+  /* background-color: rgb(231, 246, 250); */
+  padding: 20px;
 }
 
-/* .table {
-  width: 100%;
-}
-
-th,
-td {
-  padding: 1%;
-} */
-
-/*Form Component*/
-
-.formElement {
-  display: flex;
-  flex-direction: row;
-}
-
-.formSection {
-  justify-content: flex-start;
-  align-items: left;
-}
-
-.inputLabel h3 {
-  align-items: flex-start;
-  justify-content: flex-start;
-  margin-left: 0%;
+.inputLabel {
+  text-align: left;
 }
 
 .inputValues {
-  width: 80vw;
+  /*width of elememt inside the form with the className - inputValues*/
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
+  width: 100%;
+}
+/* 
+.formSection {
+  display: flex;
+  flex-direction: column;
+ 
+} */
+
+/* change */
+.date {
+  width: 60%; /* Match the width with other TextFields */
+  margin-left: 0;
 }

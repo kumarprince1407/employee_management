@@ -1,24 +1,30 @@
 //AddEmployee.jsx
-import React, { useState } from "react";
-import axios from "axios";
+import React from "react";
+//import axios from "axios";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import TextField from "@mui/material";
 
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
-import { addEmployee } from "../redux/actions";
+import { addEmployee, fetchEmployeeDetails } from "../redux/actions";
 
 import FormComponent from "./FormComponent";
+import { useDispatch } from "react-redux";
 
 import "./style.css";
+import Logout from "./Logout";
+//change
 
 function AddEmployee() {
-  const [userInput, setUserInput] = useState({
-    date: "",
-  });
+  // const [date, setDate] = useState({
+  //   date: "",
+  // });
 
   const navigate = useNavigate();
+  const dispatch = useDispatch(); //Redux dispatch
+
+  //Using 'useSelector' hook to get the redux store - CHECK
+  const employeeData = useSelector((state) => state.employeeManagementData);
 
   const handleButtonClick = () => {
     navigate(`/home`);
@@ -30,29 +36,14 @@ function AddEmployee() {
     lastName: "",
     email: "",
     salary: "",
-    // date: "",
+    date: "",
   };
 
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   const inputValue = value;
-  //   setUserInput((prevState) => ({
-  //     ...prevState,
-  //     [name]: inputValue,
-  //   }));
-  // };
-
+  //Redux change
   const handleFunctionClick = async (userData) => {
-    try {
-      const response = await axios.post(
-        `http://localhost:3004/employeedetails`,
-        userData
-      );
-      return response;
-    } catch (error) {
-      console.log("Error sending data: ", error);
-    }
+    dispatch(addEmployee(userData)); // Dispatch Redux action to add a new task
   };
+
   return (
     <React.Fragment>
       <div className="fragment1">
@@ -61,19 +52,24 @@ function AddEmployee() {
           <h2 id="heading1">Add Employee </h2>
           <Button
             variant="contained"
-            color="success"
+            // color="success"
             id="button2"
             onClick={handleButtonClick}
+            sx={{ background: "darkblue" }}
           >
             Home
           </Button>
+          <Logout />
         </div>
         {/* end */}
         <div className="mainContainer">
           <div className="inputForm">
-            <h3 id="heading2">Enter employee details</h3>
+            <span id="heading2" style={{ fontSize: "40px" }}>
+              Enter employee details
+            </span>
             <FormComponent
               initialUserInput={initialUserInput}
+              isUpdate={false}
               handleFunctionClick={handleFunctionClick}
             />
           </div>
@@ -83,12 +79,4 @@ function AddEmployee() {
   );
 }
 
-const mapStateToProps = (state) => ({
-  employeeManagementData: state.AddEmployeeDetails,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  addEmployee: (newEmployee) => dispatch(addEmployee(newEmployee)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddEmployee);
+export default AddEmployee;

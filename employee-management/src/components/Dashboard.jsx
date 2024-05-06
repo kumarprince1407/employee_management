@@ -1,9 +1,9 @@
 //Dashboard.jsx
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { fetchEmployeeDetails, deleteEmployee } from "../redux/actions";
-import { AccountCircle, Delete } from "@mui/icons-material";
+import { Delete } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
 
 //change
@@ -15,78 +15,37 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 
 import { useSelector, useDispatch } from "react-redux";
 import store from "../redux/store";
 
 import "./style.css";
-import Header from "./Header";
 
-import { getAuth, signOut } from "firebase/auth"; //To hanlde Signout
 //change
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../firebaseConfig";
+
+import Logout from "./Logout";
 
 //Initialize firebase
 initializeApp(firebaseConfig);
 
 function Dashboard() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const navigate = useNavigate(); //React router hook to navigate b/w routes
+  const dispatch = useDispatch(); //Redux hook to dispatch actions
 
-  //MUI
-  const [auth, setAuth] = React.useState(true);
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleChange = (event) => {
-    setAuth(event.target.checked);
-  };
-
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  //
   const employeeData = useSelector(
     (state) => state.employeeManagementData || []
-  );
+  ); //Using 'useSelector' hook to select 'employeeManagementData' from the Redux store, and providing the data to render in the component
 
   useEffect(() => {
     console.log("Employee data: ", employeeData);
-    dispatch(fetchEmployeeDetails());
-  }, [dispatch]); //Ensure data is fetched initially
+    dispatch(fetchEmployeeDetails()); //Dispatching Redux action to fetch employee details when the component mounts
+  }, []); //Ensure data is fetched initially
 
   //Delete
   const handleDelete = (id) => {
-    dispatch(deleteEmployee(id));
-  };
-
-  const handleLogout = () => {
-    const auth = getAuth();
-    signOut(auth)
-      .then(() => {
-        //Sign-out successfull
-        navigate("/login");
-      })
-      .catch((error) => {
-        console.log("Error during logout: ", error);
-      });
+    dispatch(deleteEmployee(id)); //Dispatching action to delete employee by ID
   };
 
   // Custom Styled TableCell
@@ -127,38 +86,7 @@ function Dashboard() {
             Add New Employee
           </Button>
 
-          {auth && (
-            <div>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleLogout}>Logout</MenuItem>
-              </Menu>
-            </div>
-          )}
+          <Logout />
         </div>
       </div>
       <div className="mainContainer">

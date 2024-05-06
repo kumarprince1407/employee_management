@@ -15,7 +15,7 @@ import {
 } from "firebase/auth";
 
 // const Login = ({ page }) => {//props implementation of switching b/w pages
-const Login = () => {
+const LoginRegister = () => {
   //hooks implementation of switching b/w pages
   const emailRegex = /^[a-z]{3,}(.[0-9a-z]*)?@([a-z]){2,}.[a-z]+(.in)*$/;
   const passwordRegex = /^.*(?=.{8,})(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=]).*$/;
@@ -143,4 +143,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginRegister;

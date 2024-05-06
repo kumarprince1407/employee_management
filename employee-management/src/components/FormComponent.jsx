@@ -3,47 +3,48 @@ import React, { useState, useEffect } from "react";
 import { Button, TextField } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
 
-import { addEmployee } from "../redux/actions";
+import { addEmployee, updateDetails } from "../redux/actions";
+import { useDispatch } from "react-redux";
 
 //change
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-//
+
 import "./style.css";
 
-function FormComponent({ initialUserInput, handleFunctionClick }) {
+//date
+import Date from "./Date";
+import dayjs from "dayjs";
+
+function FormComponent({ initialUserInput, isUpdate, employeeId }) {
   //{initialUserInput, handleFunctionClick} is a destructured obj that reprents the props passed to the component
 
-  const navigate = useNavigate();
+  const navigate = useNavigate(); //Hook to navigate to differnt routes
+  const dispatch = useDispatch(); //Redux hook to dispatch actions
 
-  const [userInput, setUserInput] = useState({});
+  const [userInput, setUserInput] = useState(initialUserInput); //State for form inputs
   const [formValid, setFormValid] = useState(true);
 
-  //location
   const location = useLocation();
-  //TODO: name the variable correctly
-  const page = location.pathname === "/" ? true : false;
+  //TODO: name the variable correctly - DONE
+  const onPageAddEmployee = location.pathname === "/" ? true : false;
 
   //making use of useEffect hook to handle updates to the initialUserInput prop
   useEffect(() => {
-    setUserInput(initialUserInput);
-  }, [initialUserInput]);
+    setUserInput(initialUserInput); //Update the form state when the initial userInput changes
+  }, [initialUserInput]); //Dependency on props
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target; // Get the name and value of the input field
 
     setUserInput((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: value, //Update the state based on input field changes
     }));
   };
 
-  const handleDateChange = (date) => {
+  const handleDateChange = (newValue) => {
     setUserInput((prevState) => ({
       ...prevState,
-      date: date ? date.format("MM/DD/YYYY") : "",
+      date: newValue ? dayjs(newValue).format("YYYY-MM-DD") : "",
     }));
   };
 
@@ -60,19 +61,20 @@ function FormComponent({ initialUserInput, handleFunctionClick }) {
       userInput.lastName.trim() === "" ||
       userInput.email.trim() === "" ||
       userInput.salary.trim() === ""
+      //userInput.date.trim() === ""
     ) {
-      setFormValid(false);
+      setFormValid(false); // set form validation to false if any of the above condition is satisfied
       return;
     }
 
-    const response = await handleFunctionClick(userInput);
-    console.log("Response logged via Form component", response);
+    setFormValid(true); //otherwise set form validation to true
 
-    if (response.status === 200) {
-      console.log("Data sent successfully");
-      navigate(`/home`);
+    if (isUpdate) {
+      dispatch(updateDetails(employeeId, userInput)); //Dispatch update action with employee ID
+      navigate("/home"); //navigate after updating
     } else {
-      console.log("Failed to send data:", response.status);
+      dispatch(addEmployee(userInput)); //Dispatching add action for new employee
+      navigate("/home"); //Navigate after adding
     }
   };
 
@@ -83,34 +85,35 @@ function FormComponent({ initialUserInput, handleFunctionClick }) {
           <form onSubmit={handleFormSubmit}>
             <div className="formSection">
               <br />
+              <label htmlFor="textarea1">
+                <div className="inputLabel">
+                  <h3>Username:</h3>
 
-              <div className="inputLabel">
-                <h3>Username:</h3>
-              </div>
-              <TextField
-                // label="User ID"
-
-                name="userid"
-                value={userInput.userid}
-                onChange={handleInputChange}
-                sx={{ width: "60%" }}
-              />
-
+                  <TextField
+                    // label="User ID"
+                    name="userid"
+                    value={userInput.userid}
+                    onChange={handleInputChange}
+                    sx={{ width: "60%" }}
+                  />
+                </div>
+              </label>
               {/* <span className="formText">First Name:</span> */}
               <label htmlFor="textarea2">
                 <br />
                 <div className="inputLabel">
                   <h3>First name:</h3>
+
+                  <TextField
+                    // label="First name"
+                    className="inputfield"
+                    type="text"
+                    name="firstName"
+                    value={userInput.firstName}
+                    onChange={handleInputChange}
+                    sx={{ width: "60%" }}
+                  />
                 </div>
-                <TextField
-                  // label="First name"
-                  className="inputfield"
-                  type="text"
-                  name="firstName"
-                  value={userInput.firstName}
-                  onChange={handleInputChange}
-                  sx={{ width: "60%" }}
-                />
               </label>
 
               {/* <span className="formText">Last Name:</span> */}
@@ -118,16 +121,17 @@ function FormComponent({ initialUserInput, handleFunctionClick }) {
                 <br />
                 <div className="inputLabel">
                   <h3>Last name:</h3>
+
+                  <TextField
+                    // label="Last name"
+                    className="inputfield"
+                    type="text"
+                    name="lastName"
+                    value={userInput.lastName}
+                    onChange={handleInputChange}
+                    sx={{ width: "60%" }}
+                  />
                 </div>
-                <TextField
-                  // label="Last name"
-                  className="inputfield"
-                  type="text"
-                  name="lastName"
-                  value={userInput.lastName}
-                  onChange={handleInputChange}
-                  sx={{ width: "60%" }}
-                />
               </label>
 
               {/* <span className="formText">Email:</span> */}
@@ -135,76 +139,62 @@ function FormComponent({ initialUserInput, handleFunctionClick }) {
                 <br />
                 <div className="inputLabel">
                   <h3>Email:</h3>
+
+                  <TextField
+                    // label="Email"
+                    className="inputfield"
+                    type="text"
+                    name="email"
+                    value={userInput.email}
+                    onChange={handleInputChange}
+                    sx={{ width: "60%" }}
+                  />
                 </div>
-                <TextField
-                  // label="Email"
-                  className="inputfield"
-                  type="text"
-                  name="email"
-                  value={userInput.email}
-                  onChange={handleInputChange}
-                  sx={{ width: "60%" }}
-                />
               </label>
 
               {/* <span className="formText">Salary:</span> */}
               <label htmlFor="textarea5">
                 <div className="inputLabel">
                   <h3>Salary:</h3>
+
+                  <TextField
+                    // label="Salary"
+                    className="inputfield"
+                    type="number"
+                    name="salary"
+                    value={userInput.salary}
+                    onChange={handleInputChange}
+                    sx={{ width: "60%" }}
+                  />
                 </div>
-                <TextField
-                  // label="Salary"
-                  className="inputfield"
-                  type="number"
-                  name="salary"
-                  value={userInput.salary}
-                  onChange={handleInputChange}
-                  sx={{ width: "60%" }}
-                />
               </label>
+              <br />
+              {onPageAddEmployee && (
+                <div className="inputLabel">
+                  <h3>Date of Joining:</h3>
+                  <Date />
+                </div>
+              )}
 
               {!formValid && (
                 <p style={{ color: "red", marginTop: "5px" }}>
                   Please fill in all the details.
                 </p>
               )}
-              <br />
               {/* change */}
-              {page && (
-                <>
-                  <div className="inputLabel">
-                    <h3>Date of Joining:</h3>
-                  </div>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={["DatePicker"]}>
-                      <DatePicker
-                        value={userInput.date}
-                        onChange={handleDateChange}
-                        sx={{ width: "60%", marginLeft: "20vw" }}
-                      />
-                    </DemoContainer>
-                  </LocalizationProvider>
-
-                  <br />
-                  {!formValid && (
-                    <p style={{ color: "red", marginTop: "5px" }}>
-                      Please fill in all the fields.
-                    </p>
-                  )}
-                  <br />
-                </>
-              )}
 
               <br />
             </div>
-            <Button
-              variant="contained"
-              // color="success"
-              type="submit"
-            >
-              {/* {initialUserInput.id ? "Update & Save" : "Add New Employee"} */}
-              {page ? "Add New Employee" : "Update & Save"}
-            </Button>
+            <div className="inputLabel">
+              <Button
+                variant="contained"
+                // color="success"
+                type="submit"
+              >
+                {/* {initialUserInput.id ? "Update & Save" : "Add New Employee"} */}
+                {onPageAddEmployee ? "Add New Employee" : "Update & Save"}
+              </Button>
+            </div>
             <br />
             <br />
           </form>

@@ -42,9 +42,19 @@ const reducer = (state = initialState, action) => {
 
     //change
     case "FETCH_EMPLOYEE_DETAILS_BY_ID":
+      const updatedEmployeeData = [...state.employeeManagementData];
+      const employeeIndex = updatedEmployeeData.findIndex(
+        (emp) => emp.id === action.payload.id
+      );
+      if (employeeIndex === -1) {
+        updatedEmployeeData.push(action.payload);
+      } else {
+        updatedEmployeeData[employeeIndex] = action.payload;
+      }
       return {
         ...state,
-        employeeManagementData: action.payload,
+        // employeeManagementData: action.payload,
+        employeeManagementData: updatedEmployeeData,
       };
     default:
       return state;

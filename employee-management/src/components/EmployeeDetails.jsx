@@ -1,35 +1,50 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+//EmployeeDeyails.jsx
+import React, { useEffect } from "react";
+//import axios from "axios";
 import { Button } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
-import { deleteEmployee, updateDetails } from "../redux/actions";
+import { deleteEmployee, fetchEmployeeDetailsById } from "../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 import "./style.css";
-
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
+
+import Logout from "./Logout";
 
 function EmployeeDetails({ employeeData }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { id } = useParams(); //Getting the 'id' from the URL
-  const [employee, setEmployee] = useState(null);
 
+  //TODO: Instead of fetching user based on 'id' via axios, fetch it from using react-redux
+  //const [employee, setEmployee] = useState(null);
+
+  // useEffect(() => {
+  //   if (id) {
+  //     axios
+  //       .get(`http://localhost:3004/employeedetails/${id}`) //Fetch the employee data
+  //       .then((response) => {
+  //         setEmployee(response.data); //Store the employee data
+  //       })
+  //       .catch((error) => {
+  //         console.log("Error fetching employee details:", error);
+  //       });
+  //   }
+  // }, [id]); //Ensuring data is fetched based on id
+
+  //change
+  //Fetch employee details when the component is mounted or when the 'id' changes
   useEffect(() => {
-    if (id) {
-      axios
-        .get(`http://localhost:3004/employeedetails/${id}`) //Fetch the employee data
-        .then((response) => {
-          setEmployee(response.data); //Store the employee data
-        })
-        .catch((error) => {
-          console.log("Error fetching employee details:", error);
-        });
-    }
-  }, [id]); //Ensuring data is fetched based on id
+    dispatch(fetchEmployeeDetailsById(id));
+  }, [id, dispatch]);
+
+  //Get employee data from the 'redux' store
+  const employee = useSelector((state) =>
+    state.employeeManagementData.find((emp) => emp.id === parseInt(id))
+  );
 
   if (!employee) {
     return <div>Loading... </div>; //Display while fetching data
@@ -44,7 +59,7 @@ function EmployeeDetails({ employeeData }) {
   return (
     <React.Fragment>
       <div className="headingContainer">
-        <h2>Detailed employee information for: {employee.firstName}</h2>
+        <h2 id="heading1">Detailed information for: {employee.firstName}</h2>
         <Button
           variant="contained"
           // color="success"
@@ -54,6 +69,7 @@ function EmployeeDetails({ employeeData }) {
         >
           Home
         </Button>
+        <Logout />
       </div>
 
       <div className="mainContainer">
@@ -96,7 +112,7 @@ function EmployeeDetails({ employeeData }) {
                   </Button>{" "}
                   <Button
                     variant="contained"
-                    style={{ background: "0073E6" }}
+                    style={{ background: "red" }}
                     onClick={() => handleDelete(employee.id)}
                   >
                     Delete
