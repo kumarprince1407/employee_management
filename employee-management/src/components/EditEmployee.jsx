@@ -1,5 +1,5 @@
 //EditEmployee.jsx
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 //import axios from "axios";
 import { Button } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
@@ -21,8 +21,6 @@ function EditEmployee() {
 
   const useridRef = useRef(null);
 
-  //change
-
   // Fetch employee details by ID from Redux
   useEffect(() => {
     dispatch(fetchEmployeeDetailsById(id));
@@ -39,39 +37,6 @@ function EditEmployee() {
     email: employee?.email || "",
     salary: employee?.salary || "",
   };
-
-  // const [userInput, setUserInput] = useState({
-  //   userid: "",
-  //   firstName: "",
-  //   lastName: "",
-  //   email: "",
-  //   salary: "",
-  // });
-
-  // useEffect(() => {
-  //   const fetchEmployeeDetails = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `http://localhost:3004/employeedetails/${id}` // Fetch employee details
-  //       );
-  //       const data = response.data;
-  //       console.log("Data: ", data);
-  //       setUserInput({
-  //         id, //Include the id in the userInput state
-  //         userid: data.userid,
-  //         firstName: data.firstName,
-  //         lastName: data.lastName,
-  //         email: data.email,
-  //         salary: data.salary,
-  //       });
-
-  //       useridRef.current?.focus();
-  //     } catch (error) {
-  //       console.log("Error fetching details:", error);
-  //     }
-  //   };
-  //   fetchEmployeeDetails();
-  // }, [id]);
 
   useEffect(() => {
     // If we have the employee data, set focus to the user ID field

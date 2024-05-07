@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 
-import { addEmployee, fetchEmployeeDetails } from "../redux/actions";
+import { addEmployee } from "../redux/actions";
 
 import FormComponent from "./FormComponent";
 import { useDispatch } from "react-redux";
@@ -47,7 +47,6 @@ function AddEmployee() {
   return (
     <React.Fragment>
       <div className="fragment1">
-        {/* start */}
         <div className="headingContainer">
           <h2 id="heading1">Add Employee </h2>
           <Button
@@ -61,7 +60,6 @@ function AddEmployee() {
           </Button>
           <Logout />
         </div>
-        {/* end */}
         <div className="mainContainer">
           <div className="inputForm">
             <span id="heading2" style={{ fontSize: "40px" }}>

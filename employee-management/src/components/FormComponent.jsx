@@ -55,16 +55,30 @@ function FormComponent({ initialUserInput, isUpdate, employeeId }) {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-      userInput.userid.trim() === "" ||
-      userInput.firstName.trim() === "" ||
-      userInput.lastName.trim() === "" ||
-      userInput.email.trim() === "" ||
-      userInput.salary.trim() === ""
-      //userInput.date.trim() === ""
-    ) {
-      setFormValid(false); // set form validation to false if any of the above condition is satisfied
-      return;
+    // if (
+    //   userInput.userid.trim() === "" ||
+    //   userInput.firstName.trim() === "" ||
+    //   userInput.lastName.trim() === "" ||
+    //   userInput.email.trim() === "" ||
+    //   userInput.salary.trim() === ""
+    //   //userInput.date.trim() === ""
+    // ) {
+    //   setFormValid(false); // set form validation to false if any of the above condition is satisfied
+    //   return;
+    // }
+
+    //Create  a new object without the 'date' field
+    const userInputWithoutDate = { ...userInput };
+    delete userInputWithoutDate.date; //Remove the date field from validation
+
+    // Check if any of the input fields are empty after trimming spaces
+    const anyFieldEmpty = Object.values(userInputWithoutDate).some(
+      (value) => (value || "").trim() === ""
+    );
+
+    if (anyFieldEmpty) {
+      setFormValid(false); // If any field is empty, mark the form as invalid
+      return; // Exit the function to prevent form submission
     }
 
     setFormValid(true); //otherwise set form validation to true
@@ -90,7 +104,6 @@ function FormComponent({ initialUserInput, isUpdate, employeeId }) {
                   <h3>Username:</h3>
 
                   <TextField
-                    // label="User ID"
                     name="userid"
                     value={userInput.userid}
                     onChange={handleInputChange}
@@ -98,14 +111,12 @@ function FormComponent({ initialUserInput, isUpdate, employeeId }) {
                   />
                 </div>
               </label>
-              {/* <span className="formText">First Name:</span> */}
               <label htmlFor="textarea2">
                 <br />
                 <div className="inputLabel">
                   <h3>First name:</h3>
 
                   <TextField
-                    // label="First name"
                     className="inputfield"
                     type="text"
                     name="firstName"
@@ -116,14 +127,12 @@ function FormComponent({ initialUserInput, isUpdate, employeeId }) {
                 </div>
               </label>
 
-              {/* <span className="formText">Last Name:</span> */}
               <label htmlFor="textarea3">
                 <br />
                 <div className="inputLabel">
                   <h3>Last name:</h3>
 
                   <TextField
-                    // label="Last name"
                     className="inputfield"
                     type="text"
                     name="lastName"
@@ -134,14 +143,12 @@ function FormComponent({ initialUserInput, isUpdate, employeeId }) {
                 </div>
               </label>
 
-              {/* <span className="formText">Email:</span> */}
               <label htmlFor="textarea4">
                 <br />
                 <div className="inputLabel">
                   <h3>Email:</h3>
 
                   <TextField
-                    // label="Email"
                     className="inputfield"
                     type="text"
                     name="email"
@@ -152,13 +159,11 @@ function FormComponent({ initialUserInput, isUpdate, employeeId }) {
                 </div>
               </label>
 
-              {/* <span className="formText">Salary:</span> */}
               <label htmlFor="textarea5">
                 <div className="inputLabel">
                   <h3>Salary:</h3>
 
                   <TextField
-                    // label="Salary"
                     className="inputfield"
                     type="number"
                     name="salary"
@@ -170,10 +175,12 @@ function FormComponent({ initialUserInput, isUpdate, employeeId }) {
               </label>
               <br />
               {onPageAddEmployee && (
-                <div className="inputLabel">
-                  <h3>Date of Joining:</h3>
-                  <Date />
-                </div>
+                <label htmlFor="textarea5">
+                  <div className="inputLabel">
+                    <h3>Date of Joining:</h3>
+                    <Date />
+                  </div>
+                </label>
               )}
 
               {!formValid && (
@@ -191,7 +198,6 @@ function FormComponent({ initialUserInput, isUpdate, employeeId }) {
                 // color="success"
                 type="submit"
               >
-                {/* {initialUserInput.id ? "Update & Save" : "Add New Employee"} */}
                 {onPageAddEmployee ? "Add New Employee" : "Update & Save"}
               </Button>
             </div>

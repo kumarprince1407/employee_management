@@ -19,23 +19,6 @@ function EmployeeDetails({ employeeData }) {
 
   const { id } = useParams(); //Getting the 'id' from the URL
 
-  //TODO: Instead of fetching user based on 'id' via axios, fetch it from using react-redux
-  //const [employee, setEmployee] = useState(null);
-
-  // useEffect(() => {
-  //   if (id) {
-  //     axios
-  //       .get(`http://localhost:3004/employeedetails/${id}`) //Fetch the employee data
-  //       .then((response) => {
-  //         setEmployee(response.data); //Store the employee data
-  //       })
-  //       .catch((error) => {
-  //         console.log("Error fetching employee details:", error);
-  //       });
-  //   }
-  // }, [id]); //Ensuring data is fetched based on id
-
-  //change
   //Fetch employee details when the component is mounted or when the 'id' changes
   useEffect(() => {
     dispatch(fetchEmployeeDetailsById(id));

@@ -113,10 +113,8 @@ function Dashboard() {
                     <StyledTableCell>{index + 1}</StyledTableCell>
                     <StyledTableCell>{employee.userid}</StyledTableCell>
                     <StyledTableCell>{employee.firstName}</StyledTableCell>
-                    {/* <td>{employee.lastName}</td> */}
                     <StyledTableCell>{employee.email}</StyledTableCell>
-                    {/* <td>{employee.salary}</td> */}
-                    {/* <td>{employee.date}</td> */}
+
                     <TableCell>
                       <Button
                         variant="contained"
