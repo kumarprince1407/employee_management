@@ -20,7 +20,10 @@ function FormComponent({ initialUserInput, isUpdate, employeeId }) {
   const navigate = useNavigate(); //Hook to navigate to differnt routes
   const dispatch = useDispatch(); //Redux hook to dispatch actions
 
-  const [userInput, setUserInput] = useState(initialUserInput); //State for form inputs
+  const [userInput, setUserInput] = useState({
+    ...initialUserInput,
+    date: initialUserInput.date ? dayjs(initialUserInput.date) : null, //Initialize date
+  }); //State for form inputs
   const [formValid, setFormValid] = useState(true);
 
   const location = useLocation();
@@ -54,18 +57,6 @@ function FormComponent({ initialUserInput, isUpdate, employeeId }) {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-
-    // if (
-    //   userInput.userid.trim() === "" ||
-    //   userInput.firstName.trim() === "" ||
-    //   userInput.lastName.trim() === "" ||
-    //   userInput.email.trim() === "" ||
-    //   userInput.salary.trim() === ""
-    //   //userInput.date.trim() === ""
-    // ) {
-    //   setFormValid(false); // set form validation to false if any of the above condition is satisfied
-    //   return;
-    // }
 
     //Create  a new object without the 'date' field
     const userInputWithoutDate = { ...userInput };
@@ -178,7 +169,10 @@ function FormComponent({ initialUserInput, isUpdate, employeeId }) {
                 <label htmlFor="textarea5">
                   <div className="inputLabel">
                     <h3>Date of Joining:</h3>
-                    <Date />
+                    <Date
+                      value={userInput.date} //Pass the current value of the date
+                      onChange={handleDateChange}
+                    />
                   </div>
                 </label>
               )}

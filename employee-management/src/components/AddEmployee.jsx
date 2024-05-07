@@ -54,7 +54,7 @@ function AddEmployee() {
             // color="success"
             id="button2"
             onClick={handleButtonClick}
-            sx={{ background: "darkblue" }}
+            sx={{ background: "darkblue", marginLeft: "25%" }}
           >
             Home
           </Button>

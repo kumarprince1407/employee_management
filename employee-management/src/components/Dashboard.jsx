@@ -79,7 +79,7 @@ function Dashboard() {
           <Button
             variant="contained"
             // color="success"
-            sx={{ background: "darkblue" }}
+            sx={{ background: "darkblue", marginLeft: "5%" }}
             id="button2"
             onClick={() => navigate("/")}
           >
