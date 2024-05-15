@@ -1,6 +1,5 @@
 //EditEmployee.jsx
 import React, { useEffect, useRef } from "react";
-//import axios from "axios";
 import { Button } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchEmployeeDetailsById, updateDetails } from "../redux/actions";
