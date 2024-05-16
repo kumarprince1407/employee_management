@@ -21,7 +21,7 @@ import store from "../redux/store";
 
 import "./style.css";
 
-//change
+//Test
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../firebaseConfig";
 
