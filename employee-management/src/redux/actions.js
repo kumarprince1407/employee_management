@@ -15,12 +15,12 @@ export const addEmployee = (employee) => async (dispatch) => {
     //TODO: Add path to the post request after creating the server - DONE
     const response = await axios.post(
       `http://localhost:3004/employeedetails`,
-      employee
+      employee //The 'employee' data is sent as the request body
     );
     console.log("Server response: ", response.data);
 
     //If the post request is successfull of, it dispatches an action to the Redux store
-    //The action has a type of 'ADD_EMPLOYEE' and a 'payload' containing the server's response data
+    //The action has a type of 'ADD_EMPLOYEE' and a 'payload' containing the data associated with the action
     dispatch({
       type: "ADD_EMPLOYEE",
       payload: response.data,

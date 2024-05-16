@@ -14,7 +14,12 @@ import "./style.css";
 import Date from "./Date";
 import dayjs from "dayjs";
 
-function FormComponent({ initialUserInput, isUpdate, employeeId }) {
+function FormComponent({
+  initialUserInput,
+  isUpdate,
+  employeeId,
+  handleFunctionClick,
+}) {
   //{initialUserInput, handleFunctionClick} is a destructured obj that reprents the props passed to the component
 
   const navigate = useNavigate(); //Hook to navigate to differnt routes
@@ -74,13 +79,17 @@ function FormComponent({ initialUserInput, isUpdate, employeeId }) {
 
     setFormValid(true); //otherwise set form validation to true
 
-    if (isUpdate) {
-      dispatch(updateDetails(employeeId, userInput)); //Dispatch update action with employee ID
-      navigate("/home"); //navigate after updating
-    } else {
-      dispatch(addEmployee(userInput)); //Dispatching add action for new employee
-      navigate("/home"); //Navigate after adding
-    }
+    handleFunctionClick(userInput); //Alternate approach for below
+
+    // if (isUpdate) {
+    //   dispatch(updateDetails(employeeId, userInput)); //Dispatch update action with employee ID
+    //   //handleFunctionClick(userInput);
+    //   navigate("/home"); //navigate after updating
+    // } else {
+    //   dispatch(addEmployee(userInput)); //Dispatching add action for new employee
+    //   //handleFunctionClick(userInput);
+    //   navigate("/home"); //Navigate after adding
+    // }
   };
 
   return (

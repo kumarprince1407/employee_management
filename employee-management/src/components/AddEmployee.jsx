@@ -1,10 +1,7 @@
 //AddEmployee.jsx
 import React from "react";
-//import axios from "axios";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
-import { useSelector } from "react-redux";
 
 import { addEmployee } from "../redux/actions";
 
@@ -16,15 +13,8 @@ import Logout from "./Logout";
 //change
 
 function AddEmployee() {
-  // const [date, setDate] = useState({
-  //   date: "",
-  // });
-
   const navigate = useNavigate();
   const dispatch = useDispatch(); //Redux dispatch
-
-  //Using 'useSelector' hook to get the redux store - CHECK
-  const employeeData = useSelector((state) => state.employeeManagementData);
 
   const handleButtonClick = () => {
     navigate(`/home`);
@@ -42,6 +32,7 @@ function AddEmployee() {
   //Redux change
   const handleFunctionClick = async (userData) => {
     dispatch(addEmployee(userData)); // Dispatch Redux action to add a new task
+    navigate(`/home`);
   };
 
   return (

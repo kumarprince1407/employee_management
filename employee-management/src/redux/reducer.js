@@ -7,34 +7,40 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
+  //The state(with a default value of 'initialState') represents the current Redux state, while the 'action' represents the dispatched action
   switch (action.type) {
     case "ADD_EMPLOYEE":
       return {
-        ...state,
+        ...state, //We are creating a shallow copy of the entire object
+
+        //In this part, employeeManagementData property of the state is updated. It's replaced with a new array that includes all the existing
+        //employee data (...state.employeeManagementData) and a new employee data provided in the 'action.payload'
         employeeManagementData: [
           ...state.employeeManagementData,
           action.payload,
-        ],
+        ], //push operation
       };
-    /*It returns a new object, using the spread poperator(...) to ensure immutability. (Redux reducers must not mutate the state directly).
-    This new state contains the previous state(...state) with 'employeeManagementData' updated to include the new employee from 
-    'action.payload'. The spread operator ('state.employeeManagementData') ensures eisting employee data is retained, and 'action.payload' is appended.*/
 
     //UPDATE_DETAILS, DELETE_EMPLOYEE
     case "UPDATE_DETAILS":
-      /*It extracts 'id' and 'updatedDetails' from 'action.payload'*/
+      /*It extracts 'id' and 'updatedDetails' from 'action.payload'(by destructuring it) which refers to the payload carried by the action dispatched to the Redux store*/
       const { id, updatedDetails } = action.payload;
 
       /*Here the 'map' function is used to create a new array by iterating over 'enmployeeManagementData'.
       If 'employee.id' matches the given 'id', the employee object is updated with 'updatedDetails'
       */
-      const updatedData = state.employeeManagementData.map((employee) =>
-        employee.id === id ? { ...employee, ...updatedDetails } : employee
+      const updatedData = state.employeeManagementData.map(
+        (employee) =>
+          //'employee' here represents each individual employee object in the 'state.employeeManagementData' array as the 'map' func. iterates over them
+          employee.id === id ? { ...employee, ...updatedDetails } : employee
+        /*If there's a match ('employee.id === id), it creates a new object using the spread operator('...employee') to copy all the properties of the
+        current employee object, and then spreads 'updatedDetails' to apply the changes
+        */
       );
       //This returns a new state object with employeeManagementData updated to reflect the changes from updatedData.
       return {
         ...state,
-        employeeManagementData: updatedData,
+        employeeManagementData: updatedData, //Updating the 'employeeManagementData' property of the state with the updatedData array created above
       };
 
     case "DELETE_DETAILS":
